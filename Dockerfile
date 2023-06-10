@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM amd64/alpine:latest
 
 WORKDIR /usr/share
 RUN \
@@ -8,6 +8,7 @@ RUN \
         python3 \
      && pip install pyess
 
-COPY run.sh /
+COPY docker/run.sh /
+RUN ["ls", "/"]
 RUN ["chmod", "+x", "/run.sh"]
 CMD [ "/run.sh" ]
