@@ -20,10 +20,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push
+      - name: Build and Push to Dockerhub
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: docker/Dockerfile
+          file: ./Dockerfile
           push: true
-          tags: ${{ github.branch_name }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lgess2mqtt:latest
