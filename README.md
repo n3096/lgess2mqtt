@@ -6,7 +6,7 @@ If you have installed **Home Assistant Operating System**, you can simply use 3r
 ## Sources
 
 Python library for LG ESS Solar power converters with EnerVU app compatibility
-from https://github.com/gluap/pyess in a Docker Container for Home Assistant.
+from [gluap/pyess](https://github.com/gluap/pyess) in a Docker Container for Home Assistant.
 
 Copyright (c) 2019-2020 Paul Görgen
 
@@ -28,7 +28,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Also, this repository is highly inspired by https://github.com/Buktahula/hassio-addons/tree/main/LG_ESS.
+Also, this repository is highly inspired by [Buktahula/hassio-addons](https://github.com/Buktahula/hassio-addons/tree/main/LG_ESS).
 
 ## Requirements
 
@@ -43,7 +43,7 @@ Also, this repository is highly inspired by https://github.com/Buktahula/hassio-
 
    `esscli --action get_password`
 
-4. Note down the ESS password after the terminal response `INFO:pyess.cli:password: `
+4. Note down the ESS password, which you will find after the terminal response `INFO:pyess.cli:password: `
 
 ### Install and configure MQTT broker for e.g. Home Assistant:
 https://hub.docker.com/_/eclipse-mosquitto
@@ -65,9 +65,21 @@ mqtt_password = <your_mqtt_password>
 ## this is a debugging option that shouldn't be required, (default is 1)
 # common_divisor = 1
 ```
+All configuration options are listed in [gluap/pyess#essmqtt-config-file](https://github.com/gluap/pyess#essmqtt-config-file). 
 
 ## Run the docker container
-tbd
+### Example docker-compose entry
+```
+  lgess2mqtt:
+    image: n3096/lgess2mqtt:latest
+    container_name: lgess2mqtt
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /my/local/path/essmqtt.conf:/etc/essmqtt.conf:ro
+```
+This container should run on `network_mode: host` to ensure the script will find the LG ESS device. 
+
 
 ## Sensor (Home Assistant)
 Here you can find a german example for the sensor configuration in Home Assistant Energy Dashboard: [/configurations/sensor.yaml](https://github.com/n3096/lgess2mqtt/blob/main/configurations/sensor.yaml) (copy of [Buktahuala/hassio-addons](https://github.com/Buktahula/hassio-addons/tree/main/LG_ESS/sensor.yaml))
